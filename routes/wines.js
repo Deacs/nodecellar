@@ -37,7 +37,7 @@ exports.findById = function(req, res) {
 	});
 };
 
-exports.findAll = function() {
+exports.findAll = function(req, res) {
 	db.collection('wines', function(err, collection) {
 		collection.find().toArray(function(err, items) {
 			res.send(items);
@@ -94,7 +94,37 @@ exports.deleteWine = function(req, res) {
 };
 
 
-
+/*--------------------------------------------------------------------------------------------------------------------*/
+// Populate database with sample data -- Only used once: the first time the application is started.
+// You'd typically not find this code in a real-life app, since the database would already exist.
+var populateDB = function() {
+ 
+    console.log('Populating database');
+    var wines = [
+    {
+        name: "CHATEAU DE SAINT COSME",
+        year: "2009",
+        grapes: "Grenache / Syrah",
+        country: "France",
+        region: "Southern Rhone",
+        description: "The aromas of fruit and spice...",
+        picture: "saint_cosme.jpg"
+    },
+    {
+        name: "LAN RIOJA CRIANZA",
+        year: "2006",
+        grapes: "Tempranillo",
+        country: "Spain",
+        region: "Rioja",
+        description: "A resurgence of interest in boutique vineyards...",
+        picture: "lan_rioja.jpg"
+    }];
+ 
+    db.collection('wines', function(err, collection) {
+        collection.insert(wines, {safe:true}, function(err, result) {});
+    });
+ 
+};
 
 
 
