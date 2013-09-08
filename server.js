@@ -1,6 +1,6 @@
 var express = require('express'),
 	wines = require('./routes/wines');
- 
+
 var app = express();
 
 app.configure(function() {

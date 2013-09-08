@@ -18,6 +18,7 @@ db = new Db('winedb', server);
 db.open(function(err, db) {
 	if (!err) {
 		console.log("Connected to 'windedb' database");
+        populateDB();
 		db.collection('wines', {strict:true}, function(err, collection) {
 			if (err) {
 				console.log("The 'wines' collection doesn't exist. Creating it with sample data...");
@@ -79,7 +80,7 @@ exports.updateWine = function (req, res) {
 };
 
 exports.deleteWine = function(req, res) {
-	var id = req.param.id;
+	var id = req.params.id;
 	console.log('Deleting wine: ' + id);
 	db.collection('wines', function(err, collection) {
 		collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
